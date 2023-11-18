@@ -1,0 +1,228 @@
+html, body, section {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+.myHeader{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    gap: 50px;
+   padding-right:30px;
+    margin-bottom: 80px;
+    padding: 20px;
+    position: sticky;
+    top:0;
+    right: 0;
+    
+}
+
+.myHeader a{
+    color: rgb(231, 218, 200);
+    text-decoration: none;
+    font-size: 28px;
+}
+
+.myHeader label{
+    color: rgb(231, 218, 200);
+    text-decoration: none;
+    font-size: 28px;
+}
+
+.myHeader a:hover{
+    color: rgb(239, 188, 126);
+    text-decoration: none;
+}
+
+.myHeader label:hover{
+    color: rgb(239, 188, 126);
+    text-decoration: none;
+}
+
+input {
+    padding: 10px;
+
+}
+
+
+#myMain{
+    background-color: black;
+    min-width: 100%;
+    min-height: 100%;
+}
+
+
+.myDiv{
+    min-height: 250px;
+    min-width: 250px;
+    background-color:rgb(46, 44, 44);
+    color: blueviolet;
+    margin: 10px;
+    border-radius: 30px;
+    box-shadow: 15px 15px 30px rgb(25, 25, 25),
+    -15px -15px 30px rgb(60, 60, 60);
+    padding: 15px;
+    border: 1px solid  blueviolet;
+    text-align: center;
+    
+    
+    
+   
+    
+}
+
+#myDivResponse{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+
+
+a {
+    color: aliceblue;
+}
+
+
+
+
+.input-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+  }
+  
+  .input {
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    border: none;
+    outline: none;
+    padding: 18px 16px;
+    background-color: transparent;
+    cursor: pointer;
+    transition: all .5s ease-in-out;
+  }
+  
+  .input::placeholder {
+    color: transparent;
+  }
+  
+  .input:focus::placeholder {
+    color: rgb(131, 128, 128);
+  }
+  
+  .input:focus,.input:not(:placeholder-shown) {
+    background-color: #fff;
+    border: 1px solid rgb(91, 107, 255);
+    width: 290px;
+    cursor: none;
+    padding: 18px 16px 18px 45px;
+  }
+  
+  .icon {
+    position: absolute;
+    left: 0;
+    height: 45px;
+    width: 45px;
+    background-color: #fff;
+    border-radius: 99px;
+    z-index: -1;
+    fill: rgb(91, 107, 255);
+    border: 1px solid rgb(91, 107, 255);
+    
+  }
+  
+  .input:focus + .icon,.input:not(:placeholder-shown) + .icon {
+    z-index: 0;
+    background-color: transparent;
+    border: none;
+  }
+  
+
+
+
+  .custom-btn {
+    animation: both;
+    width: 130px;
+    height: 40px;
+    color: #fff;
+    border-radius: 5px;
+    padding: 10px 25px;
+    font-family: 'Lato', sans-serif;
+    font-weight: 500;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-block;
+    box-shadow: inset 2px 2px 2px 0px rgba(255,255,255,.5),
+     7px 7px 20px 0px rgba(0,0,0,.1),
+     4px 4px 5px 0px rgba(0,0,0,.1);
+    outline: none;
+    font-size: 15px;
+  }
+  
+  .btn-2 {
+    background: #004dff;
+    background: linear-gradient(0deg, #004dff 0%, #004dff 100%);
+    border: none;
+  }
+  
+  .btn-2:before {
+    height: 0%;
+    width: 2px;
+  }
+  
+  .btn-2:hover {
+    box-shadow: 4px 4px 6px 0 rgba(255,255,255,.5),
+                -4px -4px 6px 0 rgba(116, 125, 136, .5), 
+      inset -4px -4px 6px 0 rgba(255,255,255,.2),
+      inset 4px 4px 6px 0 rgba(0, 0, 0, .4);
+  }
+
+
+  .nameCoin, .iconCoin, .price{
+    padding: 20px;
+    text-align: center;
+    
+  }
+
+  
+
+ .buttonPreference   {
+  display: flex;
+  padding-bottom: 7px;
+  
+ }
+
+ .buttonLike, .buttonUnLike{
+  text-decoration: none;
+  border: none;
+  background-color: rgb(46, 44, 44);
+  
+ }
+
+ .buttonLike:hover {
+  box-shadow: 4px 4px 6px 0 rgba(255,255,255,.5),
+              -4px -4px 6px 0 rgba(116, 125, 136, .5), 
+    inset -4px -4px 6px 0 rgba(255,255,255,.2),
+    inset 4px 4px 6px 0 rgba(0, 0, 0, .4);
+}
+
+
+.buttonUnLike:hover {
+  box-shadow: 4px 4px 6px 0 rgba(255,255,255,.5),
+              -4px -4px 6px 0 rgba(116, 125, 136, .5), 
+    inset -4px -4px 6px 0 rgba(255,255,255,.2),
+    inset 4px 4px 6px 0 rgba(0, 0, 0, .4);
+}
+
+
+
+
+
+

@@ -157,7 +157,7 @@ a {
     background: transparent;
     cursor: pointer;
     transition: all 0.3s ease;
-    position: relative;
+    
     display: inline-block;
     box-shadow: inset 2px 2px 2px 0px rgba(255,255,255,.5),
      7px 7px 20px 0px rgba(0,0,0,.1),
@@ -226,3 +226,72 @@ a {
 
 
 
+
+
+
+
+
+.popup{
+  display: none;
+}
+.popup-container{
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(96 95 127 / 70%);
+  background-size:inherit;
+  /* position: absolute; */
+  position:fixed;
+  top: 0;
+  left: 0;
+
+  overflow: auto;
+  
+}
+
+/* @media only screen and (max-width: 800px) {
+  .popup-container {
+    background-color: rgb(96 95 127 / 70%); ;
+     
+      position: relative;
+  }
+}  */
+
+.popupContent{
+  background-color: #ffffff;
+  padding: 20px 30px;
+  width: 50%;
+  border-radius: 15px;
+}
+.close-popup{
+  display: flex;
+  justify-content: flex-end;
+  
+}
+.close-popup a{
+  font-size: 1.2rem;
+  background-color: rebeccapurple;
+  color: #fff;
+  padding: 5px 10px;
+  font-weight: bold;
+  text-decoration: none;
+  border-radius: 10px;
+  display: inline-block;
+}
+
+.popupCoinLike{
+ display: flex;
+
+}
+
+
+
+
+
+.popupCoinLike div{
+  height: fit-content;
+  width: fit-content;
+}

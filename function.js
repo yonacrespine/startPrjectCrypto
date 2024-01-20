@@ -1,68 +1,85 @@
 (() => {
-  "use strict";
+  "use strict"
 
-  let coins = [];
+  let coins = []
 
-  
 
-  const HTMLPrincipal = document.getElementById("myDivResponse");
+  const HTMLPrincipal = document.getElementById("myDivResponse")
 
-  Spa();
-  searchCoin();
-  ajaxRequestList();
+  Spa()
+  searchCoin()
+  document.getElementsByClassName("spinner-grow")[0].style.display="block"
+  ajaxRequestList()
+  document.getElementsByClassName("spinner-grow")[0].style.display="none"
+
 
   async function ajaxRequestList() {
-    const response = await fetch("https://api.coingecko.com/api/v3/coins/");
 
-    console.log(response);
-    coins = await response.json();
+    try{
 
-    coins.forEach((coin) => {
-      coin.isLiked = false;
-      coin.iconLove=""
-    });
+      const response = await fetch("assets/cryptoAPI100.json")
 
-    console.log(coins);
+      coins = await response.json()
+  
+      coins.forEach((coin) => {
+        coin.isLiked = false
+        coin.iconLove=""
+        coin.priceDollar=""
+        coin.priceEuro=""
+        coin.priceIls=""
+        coin.timeCallApi=""
+      })
 
-    displayList(coins, HTMLPrincipal);
+      displayList(coins, HTMLPrincipal)
+
+    }
+    catch(err){
+       err= "Failed to generate the display of coins"
+      alert(err)
+    }
+   
   }
 
   function displayList(coins, placeToDisplay) {
    
-    let html = "";
+    let html = ""
 
     for (let coin of coins) {
       html += `<div class="myDiv col-md-2 ">
-                            <div class="buttonPreference" style="color:white">  Like?  
+                            
 
 
                                 <div class="popup ">
                                     <div class="popup-container ">
                                         <div class="popupContent container-fluid">
                                             <div class="close-popup closeBtn"><a href="#">X</a></div>
-                                            <div class="popupCoinLike row" style="color: black" >
 
-                                              
+                                            
+                                            <div class="row">
+                                              <div class="col paragraphPopup">
+                                                <p> 🛑You only have the right to choose up to 5 coins!🛑</p>
+                                                <p>If you wish to change your choices, do so here then close this window 😊</p>
+                                              </div>
                                             </div>
-                                                
+                                          
+
+                                            <div class="popupCoinLike row"></div>
+                                             
                                                
                                         </div>
                                     </div>
                                 </div>
 
+                                <div class="buttonPreference" style="color:white">  Like?  
+                                  <div> <button class="buttonLike "> 👍</button></div>
+                                  <div> <button class="buttonUnLike"> 👎 </button></div>
+                                  <div class="iconLove">${coin.iconLove}</div>
+                                  <div class="idCoin" style="display: none">${coin.id}</div>
+                                </div>
 
-                                <div> <button class="buttonLike "> 👍</button></div>
-                                <div> <button class="buttonUnLike"> 👎 </button></div>
-                                <div class="iconLove">${coin.iconLove}</div>
-                                <div class="idCoin" style="display: none">${coin.id}</div>
-
-                            </div>
-
-                                <div class="iconCoin"><image  src="${coin.image.small}" /> </div>
+                                <div class="iconCoin"><image  src="${coin.image}" style="height:100px"/> </div>
                                 <div class="nameCoin"> ${coin.name}  <br> ${coin.symbol} </div>
                             
-
-
                                 <button class="buttonMoreInfo custom-btn btn-2">More Info</button>
                             
                                 <div class="spinner-border text-warning" style="display:none" role="status">
@@ -74,74 +91,133 @@
 
                           
                             
-                        </div>`;
+              </div>`
     }
 
-    placeToDisplay.innerHTML = html;
+    placeToDisplay.innerHTML = html
 
-    getDomListers(coins);
-    clickButtonLike();
+    displayPrice(coins)
+    clickButtonLike()
   }
 
-  function getDomListers(coins) {
-    const buttonsMoreInfo = document.querySelectorAll(".buttonMoreInfo");
+ 
+
+    function displayPrice(coins) {
+   
+
+    const buttonsMoreInfo = document.querySelectorAll(".buttonMoreInfo")
 
     buttonsMoreInfo.forEach((button, index) => {
+
+      try{
+
+
+       const coin = coins[index]
+      button.addEventListener("click", async function () {
+
+        const myDivPrice = document.getElementById(`${coin.id}`)
+
+        if(!myDivPrice.innerHTML.includes("$")){
+
+          document.getElementsByClassName("spinner-border")[index].style.display ="block"
+          let localPriceDollar
+          let localPriceEuro
+          let localPriceIls
+
+
+
+          let now1 = new Date()
+          let timeNow= now1.getTime()
+          let deltaTime= timeNow - coin.timeCallApi
+
+          
+
+            if(coin.timeCallApi==="" || deltaTime >120000){
+
+          // call the API
+
+          const response2= await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${coin.id}&vs_currencies=usd%2Ceur%2Cils`)
+
+         
+           const coinCurrency = await response2.json()
+         
+              localPriceDollar=coinCurrency[coin.id].usd
+              coin.priceDollar= localPriceDollar
+
+              localPriceEuro= coinCurrency[coin.id].eur
+              coin.priceEuro= localPriceEuro
+
+              localPriceIls= coinCurrency[coin.id].ils
+              coin.priceIls=localPriceIls
+
+              let now= new Date()
+              coin.timeCallApi= now.getTime()
+
+          
+          }
+          else{
+          //timeCallApi  not empty, not necessary to recall the API
+
+            localPriceDollar= coin.priceDollar
+            localPriceEuro= coin.priceEuro
+            localPriceIls= coin.priceIls
+
+        
+          }
+
+          myDivPrice.innerHTML =""
+          myDivPrice.innerHTML +=`
+          <span style="color:white">  ${localPriceDollar} $ </span>
+          <br><span style="color:white">  ${localPriceEuro} €</span>
+          <br><span style="color:white">  ${localPriceIls} &#8362</span>`
+
+          document.getElementsByClassName("spinner-border")[index].style.display = "none"
+
+
+        }
+        else{
+          myDivPrice.innerHTML =""
+
+        }
       
-      button.addEventListener("click", function () {
-        button.style.opacity = 0;
+     
+      })
+    }
 
-        document.getElementsByClassName("spinner-border")[index].style.display =
-          "block";
-
-        setTimeout(() => {
-          document.getElementsByClassName("spinner-border")[
-            index
-          ].style.display = "none";
-        }, 100);
-
-        setTimeout(() => {
-          displayLId(coins, index);
-        }, 100);
-      });
-    });
+    catch(error){
+       error= "Failed to generate the display of coins"
+      alert(error)
+    }
+    })
   }
 
-  function displayLId(coins, index) {
-    const coin = coins[index];
-
-    const myDivPrice = document.getElementById(`${coin.id}`);
-    myDivPrice.innerHTML = "";
-    myDivPrice.innerHTML += `
-            <span style="color:white">  ${coin.market_data.current_price.usd} $ </span>
-            <br><span style="color:white">  ${coin.market_data.current_price.eur} €</span>
-            <br><span style="color:white">  ${coin.market_data.current_price.ils} &#8362</span>`;
-  }
 
   function Spa() {
-    const sections = document.getElementsByTagName("section");
-    const homeSection = document.getElementById("homeSection");
+    const sections = document.getElementsByTagName("section")
+    const homeSection = document.getElementById("homeSection")
 
-    // Cacher toutes les sections sauf la section d'accueil
+    
+    //Hide all sections except the home section
     for (let i = 0; i < sections.length; i++) {
-      sections[i].style.display = "none";
+      sections[i].style.display = "none"
     }
-    homeSection.style.display = "block";
+    homeSection.style.display = "block"
 
-    // Ajouter un écouteur d'événements à chaque lien
-    const links = document.getElementsByTagName("a");
+
+    const links = document.getElementsByTagName("a")
 
     for (let i = 0; i < links.length; i++) {
       links[i].addEventListener("click", function () {
-        const dataSection = this.dataset.section;
+        const dataSection = this.dataset.section
 
-        // Cacher toutes les sections
+
+        //Hide all sections
         for (let j = 0; j < sections.length; j++) {
-          sections[j].style.display = "none";
+          sections[j].style.display = "none"
         }
 
-        // Afficher la section correspondante
-        document.getElementById(`${dataSection}`).style.display = "block";
+        // Show corresponding section
+        document.getElementById(`${dataSection}`).style.display = "block"
       });
     }
   }
@@ -150,24 +226,22 @@
     const inputSearch = document.getElementById("inputSearch");
 
     inputSearch.addEventListener("keyup", function () {
-      const textToSearch = this.value;
+      const textToSearch = this.value
 
       if (textToSearch === "") {
-        displayList(coins, HTMLPrincipal);
+        displayList(coins, HTMLPrincipal)
       } else {
         const filteredCoins = coins?.filter((coin) =>
           coin.name.toLowerCase().includes(textToSearch)
         );
 
-        console.log(filteredCoins);
-
-        displayList(filteredCoins, HTMLPrincipal);
+        displayList(filteredCoins, HTMLPrincipal)
       }
-    });
+    })
   }
 
 
-  let numberOfHearts = 0; // Initialiser le nombre de cœurs à 0
+  let numberOfHearts = 0 
   
 
   function clickButtonLike() {
@@ -177,31 +251,25 @@
     const idCoin = document.querySelectorAll(".idCoin");
 
 
-    
-    
-
     buttonLike.forEach((button, index) => {
       button.addEventListener("click", function () {
-        // alert("lister + ❤️" + index)
+        
         if (numberOfHearts <= 4 && iconLove[index].innerHTML.trim() === "") {
-          iconLove[index].innerHTML = "❤️";
-          
-          coins[index].isLiked = true;
+
+          iconLove[index].innerHTML = "❤️"
+
+
           numberOfHearts++;
 
           coins.forEach(coin=>{
             if(coin.id=== idCoin[index].innerHTML){
-            //  alert(index +"191 "+ iconLove[index].innerHTML+ "/"+ coin.name + "/" + coin.id )
+         
               coin.iconLove="❤️"
+              coin.isLiked = true;
             }
           })
           
-        
           
-
-          // coins[index].iconLove="❤️"
-
-          console.log(numberOfHearts);
         } else if (
           numberOfHearts === 5 &&
           iconLove[index].innerHTML.trim() === ""
@@ -216,26 +284,19 @@
 
     buttonUnLike.forEach((button, index) => {
       button.addEventListener("click", function () {
-        alert("lister no + ❤️" + iconLove[index].innerHTML + "/")
-
+      
         if (numberOfHearts > 0 && iconLove[index].innerHTML === "❤️") {
-        // if (numberOfHearts > 0  ) {
-          // alert(index+ "207"+ iconLove[index].innerHTML)
+  
           iconLove[index].innerHTML = "";
-          coins[index].isLiked = false 
-          // alert("/" +idCoin[index].innerHTML + "/"+ "idCoin" )
-          
+         
           coins.forEach(coin=>{
             if(coin.id=== idCoin[index].innerHTML){
-            //  alert(index +"213 "+ iconLove[index].innerHTML+ "/"+ coin.name )
               coin.iconLove=""
+              coin.isLiked=false
             }
           })
           
           numberOfHearts--;
-          
-
-          console.log(numberOfHearts);
         
         }
       });
@@ -243,59 +304,38 @@
   }
 
   function displayPopup() {
-    const popup = document.querySelector(".popup");
-    const closeBtn = document.querySelector(".closeBtn");
+    const popup = document.querySelector(".popup")
+    const closeBtn = document.querySelector(".closeBtn")
 
-    console.log(popup);
+    popup.style.display = "block"
 
-    popup.style.display = "block";
-
-    const popupCoinLike = document.querySelector(".popupCoinLike");
-
-    popupCoinLike.innerHTML = "";
-
-
-    // popupCoinLike.innerHTML = `
-    // <div class="row">
-    //   <div class="col">
-    //     <p>You only have the right to choose up to 5 coins!</p>
-    //     <p>If you wish to change your choices, do so here then close this window 😊</p>
-    //   </div>
-    // </div>`
-
-
-
-  
-console.log(popupCoinLike.innerHTML)
+    const popupCoinLike = document.querySelector(".popupCoinLike")
 
     let coinsLiked = [];
 
+    popupCoinLike.innerHTML = ""
+
     coins.forEach((coin) => {
       if (coin.isLiked == true) {
-        coinsLiked.push(coin);
+        coinsLiked.push(coin)
       }
      
-      
-    });
-
+    })
     
-    // displayList(coinsLiked, popupCoinLike);
+    displayList(coinsLiked, popupCoinLike)
     
 
     closeBtn.addEventListener("click", () => {
-      popup.style.display = "none";
-    displayList(coins, HTMLPrincipal);
 
-      
+      popup.style.display = "none"
+      popup.innerHTML = ""
 
-    });
+    displayList(coins, HTMLPrincipal)
+    
+
+    })
+
   }
 
  
-  
-
-  
-
-
-
-})();
+})()

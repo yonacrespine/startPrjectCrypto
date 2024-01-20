@@ -68,9 +68,6 @@ input {
     text-align: center;
     
     
-    
-   
-    
 }
 
 #myDivResponse{
@@ -79,13 +76,9 @@ input {
     flex-wrap: wrap;
 }
 
-
-
 a {
     color: aliceblue;
 }
-
-
 
 
 .input-container {
@@ -143,8 +136,6 @@ a {
   }
   
 
-
-
   .custom-btn {
     animation: both;
     width: 130px;
@@ -191,7 +182,6 @@ a {
     
   }
 
-  
 
  .buttonPreference   {
   display: flex;
@@ -223,14 +213,6 @@ a {
 
 
 
-
-
-
-
-
-
-
-
 .popup{
   display: none;
 }
@@ -243,7 +225,7 @@ a {
   align-items: center;
   background-color: rgb(96 95 127 / 70%);
   background-size:inherit;
-  /* position: absolute; */
+
   position:fixed;
   top: 0;
   left: 0;
@@ -252,13 +234,6 @@ a {
   
 }
 
-/* @media only screen and (max-width: 800px) {
-  .popup-container {
-    background-color: rgb(96 95 127 / 70%); ;
-     
-      position: relative;
-  }
-}  */
 
 .popupContent{
   background-color: #ffffff;
@@ -288,10 +263,25 @@ a {
 }
 
 
-
-
-
 .popupCoinLike div{
   height: fit-content;
   width: fit-content;
+}
+
+
+.paragraphPopup p{
+  color: darkmagenta;
+  font-weight: 700;
+}
+
+
+#aboutSection, #reportSection{
+  color: antiquewhite;
+  font-size: large;
+  font-weight: 300;
+}
+
+
+.marketClose{
+  margin: auto;
 }
